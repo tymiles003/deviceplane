@@ -17,7 +17,7 @@ func (r *Runner) getServiceMetrics(
 	deviceConn net.Conn,
 	project *models.Project,
 	device *models.Device,
-	metricConfig *models.MetricTargetConfig,
+	metricConfig *models.ExposedMetricConfigHolder,
 	apps []models.Application,
 	appsByID map[string]*models.Application,
 	latestAppReleaseByAppID map[string]*models.Release,
