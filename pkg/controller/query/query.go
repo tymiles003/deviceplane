@@ -52,7 +52,7 @@ func DeviceMatchesQuery(device models.Device, query models.Query) (bool, error) 
 			return false, nil
 		}
 	}
-	return true, nil
+	return false, nil
 }
 
 func deviceMatchesFilter(device models.Device, filter models.Filter) (bool, error) {
