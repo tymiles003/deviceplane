@@ -2,6 +2,11 @@ package models
 
 import "time"
 
+const (
+	DefaultServiceMetricPort uint = 2112
+	DefaultServiceMetricPath      = "/metrics"
+)
+
 // ServiceMetricConfig is used for metrics scraping
 type ServiceMetricConfig struct {
 	Port uint   `json:"port" yaml:"port"`

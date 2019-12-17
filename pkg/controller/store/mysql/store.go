@@ -1866,7 +1866,7 @@ func (s *Store) scanApplication(scanner scanner) (*models.Application, error) {
 		}
 	}
 	if serviceMetricsConfigStr == "" {
-		application.ServiceMetricsConfig = make(map[string]models.ServiceMetricConfig, 0)
+		application.ServiceMetricsConfig = make(map[string]models.ServiceMetricConfig)
 	} else {
 		err := json.Unmarshal([]byte(serviceMetricsConfigStr), &application.ServiceMetricsConfig)
 		if err != nil {
