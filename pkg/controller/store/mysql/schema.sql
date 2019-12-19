@@ -334,10 +334,10 @@ create table if not exists applications (
 create table if not exists project_configs (
   project_id varchar(32) not null,
 
-  key varchar(100) not null,
-  value longtext not null,
+  k varchar(100) not null,
+  v longtext not null,
 
-  primary key (project_id, key),
+  primary key (project_id, k),
   foreign key applications_project_id(project_id)
   references projects(id)
   on delete cascade

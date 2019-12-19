@@ -673,13 +673,13 @@ const deleteDeviceServiceStatus = `
 const setProjectConfig = `
   replace into metric_target_configs (
     project_id,
-    key,
-    value
+    k,
+    v
   )
   values (?, ?, ?)
 `
 
 const getProjectConfig = `
-  select project_id, key, value from project_configs
-  where project_id = ? and key = ?
+  select project_id, k, v from project_configs
+  where project_id = ? and k = ?
 `
