@@ -318,10 +318,26 @@ create table if not exists applications (
   name varchar(100) not null,
   description longtext not null,
   scheduling_rule longtext not null,
-  service_metrics_config longtext not null,
+  metric_endpoint_configs longtext not null,
 
   primary key (id),
   unique(name, project_id),
+  foreign key applications_project_id(project_id)
+  references projects(id)
+  on delete cascade
+);
+
+--
+-- Project Configs
+--
+
+create table if not exists project_configs (
+  project_id varchar(32) not null,
+
+  key varchar(100) not null,
+  value longtext not null,
+
+  primary key (project_id, key),
   foreign key applications_project_id(project_id)
   references projects(id)
   on delete cascade
