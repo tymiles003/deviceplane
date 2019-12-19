@@ -338,7 +338,7 @@ create table if not exists project_configs (
   v longtext not null,
 
   primary key (project_id, k),
-  foreign key applications_project_id(project_id)
+  foreign key project_configs_project_id(project_id)
   references projects(id)
   on delete cascade
 );

@@ -20,10 +20,10 @@ func (r *Runner) getServiceMetrics(
 	apps []models.Application,
 	appsByID map[string]*models.Application,
 	latestAppReleaseByAppID map[string]*models.Release,
-	serviceMetricsConfigs *[]models.ServiceMetricsConfig,
+	serviceMetricsConfigs []models.ServiceMetricsConfig,
 ) (metrics datadog.Series) {
 	appIsScheduled := map[string]bool{} // we have denormalized (app, serv), (app, serv2) tuples in metricConfig.Configs
-	for _, serviceMetricsConfig := range *serviceMetricsConfigs {
+	for _, serviceMetricsConfig := range serviceMetricsConfigs {
 		app, exists := appsByID[serviceMetricsConfig.ApplicationID]
 		if !exists {
 			return nil

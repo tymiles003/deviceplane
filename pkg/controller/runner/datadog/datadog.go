@@ -87,7 +87,7 @@ func (r *Runner) Do(ctx context.Context) {
 		}
 		appsByID := make(map[string]*models.Application, len(apps))
 		latestAppReleaseByAppID := make(map[string]*models.Release, len(apps))
-		if len(*serviceMetricsConfigs) != 0 {
+		if len(serviceMetricsConfigs) != 0 {
 			for i, app := range apps {
 				appsByID[app.ID] = &apps[i]
 
@@ -143,7 +143,7 @@ func (r *Runner) Do(ctx context.Context) {
 					}
 				}
 
-				if len(*serviceMetricsConfigs) != 0 {
+				if len(serviceMetricsConfigs) != 0 {
 					serviceMetrics := r.getServiceMetrics(deviceConn, &project, &device, apps, appsByID, latestAppReleaseByAppID, serviceMetricsConfigs)
 					if len(serviceMetrics) != 0 {
 						lock.Lock()

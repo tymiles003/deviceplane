@@ -2232,7 +2232,7 @@ func (s *Store) scanDeviceMetricsConfig(scanner scanner) (*models.DeviceMetricsC
 	return &dmc, nil
 }
 
-func (s *Store) scanServiceMetricsConfig(scanner scanner) (*[]models.ServiceMetricsConfig, error) {
+func (s *Store) scanServiceMetricsConfig(scanner scanner) ([]models.ServiceMetricsConfig, error) {
 	pConfig, err := s.scanProjectConfig(scanner)
 	if err != nil {
 		return nil, err
@@ -2244,7 +2244,7 @@ func (s *Store) scanServiceMetricsConfig(scanner scanner) (*[]models.ServiceMetr
 		return nil, err
 	}
 
-	return &smc, nil
+	return smc, nil
 }
 
 func (s *Store) scanProjectMetricsConfig(scanner scanner) (*models.ProjectMetricsConfig, error) {
@@ -2278,7 +2278,7 @@ func (s *Store) SetServiceMetricsConfigs(ctx context.Context, projectID string, 
 	return err
 }
 
-func (s *Store) GetServiceMetricsConfigs(ctx context.Context, projectID string) (*[]models.ServiceMetricsConfig, error) {
+func (s *Store) GetServiceMetricsConfigs(ctx context.Context, projectID string) ([]models.ServiceMetricsConfig, error) {
 	smcRow := s.db.QueryRowContext(
 		ctx,
 		getProjectConfig,
@@ -2288,8 +2288,7 @@ func (s *Store) GetServiceMetricsConfigs(ctx context.Context, projectID string) 
 
 	smc, err := s.scanServiceMetricsConfig(smcRow)
 	if err == sql.ErrNoRows {
-		temp := make([]models.ServiceMetricsConfig, 0)
-		return &temp, nil
+		return make([]models.ServiceMetricsConfig, 0), nil
 	} else if err != nil {
 		return nil, err
 	}

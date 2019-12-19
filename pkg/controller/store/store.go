@@ -239,6 +239,6 @@ type MetricConfigs interface {
 	SetProjectMetricsConfig(ctx context.Context, projectID string, value models.ProjectMetricsConfig) error
 	GetDeviceMetricsConfig(ctx context.Context, projectID string) (*models.DeviceMetricsConfig, error)
 	SetDeviceMetricsConfig(ctx context.Context, projectID string, value models.DeviceMetricsConfig) error
-	GetServiceMetricsConfigs(ctx context.Context, projectID string) (*[]models.ServiceMetricsConfig, error)
+	GetServiceMetricsConfigs(ctx context.Context, projectID string) ([]models.ServiceMetricsConfig, error)
 	SetServiceMetricsConfigs(ctx context.Context, projectID string, value []models.ServiceMetricsConfig) error
 }
