@@ -671,7 +671,7 @@ const deleteDeviceServiceStatus = `
 `
 
 const setProjectConfig = `
-  replace into metric_target_configs (
+  replace into project_configs (
     project_id,
     k,
     v

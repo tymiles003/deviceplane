@@ -9,7 +9,6 @@ import (
 
 	"github.com/deviceplane/deviceplane/pkg/controller/store"
 	"github.com/deviceplane/deviceplane/pkg/models"
-	"github.com/deviceplane/deviceplane/pkg/utils"
 	"github.com/pkg/errors"
 
 	"github.com/segmentio/ksuid"
@@ -2225,7 +2224,7 @@ func (s *Store) scanDeviceMetricsConfig(scanner scanner) (*models.DeviceMetricsC
 	}
 
 	var dmc models.DeviceMetricsConfig
-	err = utils.JSONConvert(pConfig.Value, &dmc)
+	err = json.Unmarshal([]byte(pConfig.Value), &dmc)
 	if err != nil {
 		return nil, err
 	}
@@ -2240,7 +2239,7 @@ func (s *Store) scanServiceMetricsConfig(scanner scanner) (*[]models.ServiceMetr
 	}
 
 	var smc []models.ServiceMetricsConfig
-	err = utils.JSONConvert(pConfig.Value, &smc)
+	err = json.Unmarshal([]byte(pConfig.Value), &smc)
 	if err != nil {
 		return nil, err
 	}
@@ -2255,7 +2254,7 @@ func (s *Store) scanProjectMetricsConfig(scanner scanner) (*models.ProjectMetric
 	}
 
 	var pmc models.ProjectMetricsConfig
-	err = utils.JSONConvert(pConfig.Value, &pmc)
+	err = json.Unmarshal([]byte(pConfig.Value), &pmc)
 	if err != nil {
 		return nil, err
 	}
@@ -2264,12 +2263,17 @@ func (s *Store) scanProjectMetricsConfig(scanner scanner) (*models.ProjectMetric
 }
 
 func (s *Store) SetServiceMetricsConfigs(ctx context.Context, projectID string, value []models.ServiceMetricsConfig) error {
-	_, err := s.db.ExecContext(
+	valueBytes, err := json.Marshal(value)
+	if err != nil {
+		return err
+	}
+
+	_, err = s.db.ExecContext(
 		ctx,
 		setProjectConfig,
 		projectID,
 		models.ServiceMetricsConfigKey,
-		value,
+		valueBytes,
 	)
 	return err
 }
@@ -2284,7 +2288,8 @@ func (s *Store) GetServiceMetricsConfigs(ctx context.Context, projectID string) 
 
 	smc, err := s.scanServiceMetricsConfig(smcRow)
 	if err == sql.ErrNoRows {
-		smc = &[]models.ServiceMetricsConfig{}
+		temp := make([]models.ServiceMetricsConfig, 0)
+		return &temp, nil
 	} else if err != nil {
 		return nil, err
 	}
@@ -2293,12 +2298,17 @@ func (s *Store) GetServiceMetricsConfigs(ctx context.Context, projectID string) 
 }
 
 func (s *Store) SetProjectMetricsConfig(ctx context.Context, projectID string, value models.ProjectMetricsConfig) error {
-	_, err := s.db.ExecContext(
+	valueBytes, err := json.Marshal(value)
+	if err != nil {
+		return err
+	}
+
+	_, err = s.db.ExecContext(
 		ctx,
 		setProjectConfig,
 		projectID,
 		models.ProjectMetricsConfigKey,
-		value,
+		valueBytes,
 	)
 	return err
 }
@@ -2313,7 +2323,9 @@ func (s *Store) GetProjectMetricsConfig(ctx context.Context, projectID string) (
 
 	pmc, err := s.scanProjectMetricsConfig(pmcRow)
 	if err == sql.ErrNoRows {
-		return nil, store.ErrProjectConfigNotFound
+		return &models.ProjectMetricsConfig{
+			ExposedMetrics: make([]models.ExposedMetric, 0),
+		}, nil
 	} else if err != nil {
 		return nil, err
 	}
@@ -2322,12 +2334,17 @@ func (s *Store) GetProjectMetricsConfig(ctx context.Context, projectID string) (
 }
 
 func (s *Store) SetDeviceMetricsConfig(ctx context.Context, projectID string, value models.DeviceMetricsConfig) error {
-	_, err := s.db.ExecContext(
+	valueBytes, err := json.Marshal(value)
+	if err != nil {
+		return err
+	}
+
+	_, err = s.db.ExecContext(
 		ctx,
 		setProjectConfig,
 		projectID,
 		models.DeviceMetricsConfigKey,
-		value,
+		valueBytes,
 	)
 	return err
 }
@@ -2342,7 +2359,9 @@ func (s *Store) GetDeviceMetricsConfig(ctx context.Context, projectID string) (*
 
 	dmc, err := s.scanDeviceMetricsConfig(dmcRow)
 	if err == sql.ErrNoRows {
-		return nil, store.ErrProjectConfigNotFound
+		return &models.DeviceMetricsConfig{
+			ExposedMetrics: make([]models.ExposedMetric, 0),
+		}, nil
 	} else if err != nil {
 		return nil, err
 	}

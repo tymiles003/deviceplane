@@ -33,7 +33,7 @@ func FilterMetrics(
 	// Build kv pair for efficiency
 	allowedMetricsByName := make(map[string]*models.ExposedMetric, len(exposedMetrics))
 	for i, m := range exposedMetrics {
-		allowedMetricsByName[m.Metric] = &exposedMetrics[i]
+		allowedMetricsByName[m.Name] = &exposedMetrics[i]
 	}
 
 	for _, m := range metrics {

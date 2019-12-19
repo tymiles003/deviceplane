@@ -1,9 +1,9 @@
 package models
 
 type ProjectConfig struct {
-	ProjectID string      `json:"projectId" yaml:"projectId"`
-	Key       string      `json:"key" yaml:"key"`
-	Value     interface{} `json:"value" yaml:"value"`
+	ProjectID string `json:"projectId" yaml:"projectId"`
+	Key       string `json:"key" yaml:"key"`
+	Value     string `json:"value" yaml:"value"`
 }
 
 const (
@@ -27,7 +27,7 @@ type DeviceMetricsConfig struct {
 }
 
 type ExposedMetric struct {
-	Metric     string   `json:"metric" yaml:"metric"`
+	Name       string   `json:"name" yaml:"name"`
 	Labels     []string `json:"labels" yaml:"labels"`
 	Properties []string `json:"properties" yaml:"properties"`
 }

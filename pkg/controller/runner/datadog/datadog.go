@@ -114,7 +114,7 @@ func (r *Runner) Do(ctx context.Context) {
 
 				if len(projectMetricsConfig.ExposedMetrics) != 0 {
 					projectMetrics := r.getProjectMetrics(ctx, &project, &device)
-					filteredProjectMetrics := FilterMetrics(projectMetrics, &project, &device, models.DeviceMetricsConfigKey, deviceMetricsConfig.ExposedMetrics, nil, nil)
+					filteredProjectMetrics := FilterMetrics(projectMetrics, &project, &device, models.ProjectMetricsConfigKey, projectMetricsConfig.ExposedMetrics, nil, nil)
 					if len(filteredProjectMetrics) != 0 {
 						lock.Lock()
 						req.Series = append(req.Series, filteredProjectMetrics...)
