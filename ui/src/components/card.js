@@ -6,6 +6,9 @@ import Logo from './icons/logo';
 import { Column, Row, Text, Button, Link } from './core';
 
 const Container = styled(Column)`
+  pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
+  opacity: ${props => (props.disabled ? 0.2 : 1)};
+
   ${variant({
     variants: {
       small: {
@@ -39,7 +42,9 @@ const Card = ({
   border = false,
   logo,
   actions = [],
+  header,
   children,
+  disabled,
   ...props
 }) => {
   return (
@@ -52,6 +57,7 @@ const Card = ({
       border={border ? 0 : undefined}
       borderColor="white"
       boxShadow={1}
+      disabled={disabled}
       {...props}
     >
       {logo && (
@@ -99,6 +105,7 @@ const Card = ({
                   />
                 )
             )}
+            {header}
           </Row>
         </Row>
       )}

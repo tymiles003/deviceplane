@@ -90,9 +90,13 @@ const DeviceSettings = ({
 
         <Row marginBottom={6}>
           {device.status === 'offline' ? (
-            <Badge bg="red">offline</Badge>
+            <Badge color="red" borderColor="red">
+              offline
+            </Badge>
           ) : (
-            <Badge bg="green">online</Badge>
+            <Badge color="green" borderColor="green">
+              online
+            </Badge>
           )}
         </Row>
 

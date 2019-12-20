@@ -3,7 +3,7 @@ import React from 'react';
 import api from '../../api';
 import { Column, Label, Value } from '../../components/core';
 import Card from '../../components/card';
-import EditableLabelTable from '../../components/EditableLabelTable';
+import EditableLabelTable from '../../components/editable-label-table';
 
 const RegistrationTokenOverview = ({
   route: {

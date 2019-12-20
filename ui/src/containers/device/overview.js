@@ -17,7 +17,8 @@ import Card from '../../components/card';
 import Table from '../../components/table';
 import Popup from '../../components/popup';
 import Editor from '../../components/editor';
-import EditableLabelTable from '../../components/EditableLabelTable';
+import EditableLabelTable from '../../components/editable-label-table';
+import DeviceStatus from '../../components/device-status';
 
 const DeviceServices = ({ projectId, device, applicationStatusInfo }) => {
   const [serviceMetrics, setServiceMetrics] = useState({});
@@ -147,7 +148,7 @@ const DeviceOverview = ({
                 });
                 setHostMetrics(response.data);
               } catch (error) {
-                toaster.danger('Host metrics are currently unavailable.');
+                toaster.danger('Current device metrics are unavailable.');
                 console.log(error);
               }
             },
@@ -173,11 +174,7 @@ const DeviceOverview = ({
         ]}
       >
         <Row marginBottom={6}>
-          {device.status === 'offline' ? (
-            <Badge bg="red">offline</Badge>
-          ) : (
-            <Badge bg="green">online</Badge>
-          )}
+          <DeviceStatus status={device.status} />
         </Row>
         <Column marginBottom={6}>
           <Label>IP Address</Label>
@@ -224,7 +221,12 @@ const DeviceOverview = ({
         />
       </Card>
       <Popup show={!!hostMetrics} onClose={() => setHostMetrics(null)}>
-        <Card border title="Host Metrics" subtitle={device.name} size="xxlarge">
+        <Card
+          border
+          title="Current Device Metrics"
+          subtitle={device.name}
+          size="xxlarge"
+        >
           <Editor width="100%" height="70vh" value={hostMetrics} readOnly />
         </Card>
       </Popup>
