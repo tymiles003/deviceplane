@@ -431,6 +431,11 @@ const updateDeviceLabels = `
   where id = ? and project_id = ?
 `
 
+const listAllDeviceLabels = `
+  select labels from devices
+  where project_id = ?
+`
+
 const setDeviceInfo = `
   update devices
   set info = ?
