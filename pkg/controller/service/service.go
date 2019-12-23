@@ -209,7 +209,7 @@ func NewService(
 	apiRouter.HandleFunc("/projects/{project}/applications", s.validateAuthorization("applications", "CreateApplication", s.createApplication)).Methods("POST")
 	apiRouter.HandleFunc("/projects/{project}/applications/{application}", s.validateAuthorization("applications", "GetApplication", s.withApplication(s.getApplication))).Methods("GET")
 	apiRouter.HandleFunc("/projects/{project}/applications", s.validateAuthorization("applications", "ListApplications", s.listApplications)).Methods("GET")
-	apiRouter.HandleFunc("/projects/{project}/applications/{application}", s.validateAuthorization("applications", "UpdateApplication", s.withApplication(s.updateApplication))).Methods("PUT")
+	apiRouter.HandleFunc("/projects/{project}/applications/{application}", s.validateAuthorization("applications", "UpdateApplication", s.withApplication(s.updateApplication))).Methods("PATCH")
 	apiRouter.HandleFunc("/projects/{project}/applications/{application}", s.validateAuthorization("applications", "DeleteApplication", s.withApplication(s.deleteApplication))).Methods("DELETE")
 
 	apiRouter.HandleFunc("/projects/{project}/applications/{application}/releases", s.validateAuthorization("releases", "CreateRelease", s.withApplication(s.createRelease))).Methods("POST")
